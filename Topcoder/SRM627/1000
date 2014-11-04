@@ -1,0 +1,73 @@
+
+Problem Statement
+    
+The pseudocode shown below is an implementation of BubbleSort. Note that the array A used in the implementation is 0-based. That is, elements of A have indices 0 through Length(A)-1, inclusive.
+BubbleSort(A):
+        Repeat Length(A)-1 times:
+               For every i from 0 to Length(A)-2, inclusive:
+                      If A[i] > A[i+1] then:
+                               Swap A[i] and A[i+1]
+We are going to sort the array A using the above algorithm. However, before we do that, you are allowed to reverse at most K disjoint subarrays of A. For example, suppose that A={10, 20, 30, 40, 50, 60, 70} and that K=1. In this case you may, for example, reverse the subarray [2,5] - that is, the elements at (0-based) indices 2 through 5. This would produce the array {10, 20, 60, 50, 40, 30, 70}. We are interested in minimizing the number of swaps executed by our BubbleSort. You are given the int[] A and the int K. Return the smallest possible number of swaps performed by our BubbleSort after you reverse at most K disjoint subarrays of A.
+Definition
+    
+Class:
+BubbleSortWithReversals
+Method:
+getMinSwaps
+Parameters:
+int[], int
+Returns:
+int
+Method signature:
+int getMinSwaps(int[] A, int K)
+(be sure your method is public)
+Limits
+    
+Time limit (s):
+2.000
+Memory limit (MB):
+256
+Constraints
+-
+A will contain between 2 and 50 elements.
+-
+K will be between 1 and 50.
+-
+Each element of A will be between 1 and 1000, inclusive.
+Examples
+0)
+
+    
+{6,8,8,7,7}
+1
+Returns: 0
+By reversing the subarray [1,4] we obtain a new array {6,7,7,8,8}. This array is already sorted and we can easily verify that our BubbleSort never swaps anything.
+1)
+
+    
+{7,2,2,13,5,5,2}
+2
+Returns: 3
+
+2)
+
+    
+{12,5,1,10,12,6,6,10,6,8}
+2
+Returns: 12
+
+3)
+
+    
+{2,3,1}
+2
+Returns: 1
+Note that the subarrays we are reversing must all be disjoint. For example, it is not allowed to reverse first the subarray [0,1] and then the subarray [0,2].
+4)
+
+    
+{482,619,619,601,660,660,691,691,77,77,96,77}
+9
+Returns: 22
+
+This problem statement is the exclusive and proprietary property of TopCoder, Inc. Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited. (c)2003, TopCoder, Inc. All rights reserved.
