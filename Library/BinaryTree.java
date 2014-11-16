@@ -1,8 +1,16 @@
+import java.util.ArrayList;
+
 public class BinaryTree<T extends Comparable<T>>{
 	
-	private BinaryTree<T> left;
-	private BinaryTree<T> right;
+	BinaryTree<T> left;
+	BinaryTree<T> right;
 	public T data;
+	
+	BinaryTree(){
+		left = null;
+		right = null;
+		data = null;
+	}
 	
 	public BinaryTree(T data){
 		left = null;
@@ -37,8 +45,7 @@ public class BinaryTree<T extends Comparable<T>>{
 				return false;
 			if(!right.isBST())
 				return false;
-		}			
-		
+		}					
 		return true;
 	}
 	
@@ -59,14 +66,45 @@ public class BinaryTree<T extends Comparable<T>>{
 		if(left != null && left.exists(data))
 			return true;
 		if(right != null && right.exists(data))
-			return true;
-		
+			return true;		
 		return false;
 	}
 	
+	public ArrayList<T> inOrderTraversal(){
+		ArrayList<T> output = new ArrayList<T>();
+		if(left != null)
+			output.addAll(left.inOrderTraversal());
+		output.add(data);
+		if(right != null)
+			output.addAll(right.inOrderTraversal());
+		return output;
+	}
+	
+	public ArrayList<T> preOrderTraversal(){
+		ArrayList<T> output = new ArrayList<T>();
+		output.add(data);
+		if(left != null)
+			output.addAll(left.preOrderTraversal());
+		if(right != null)
+			output.addAll(right.preOrderTraversal());
+		return output;
+	}
+	
+	public ArrayList<T> postOrderTraversal(){
+		ArrayList<T> output = new ArrayList<T>();
+		if(left != null)
+			output.addAll(left.postOrderTraversal());
+		if(right != null)
+			output.addAll(right.postOrderTraversal());
+		output.add(data);
+		return output;	
+	}
+	
 	public String toString(){
-		
-		
-		return "";
+		ArrayList<T> traversal = inOrderTraversal();
+		StringBuffer output = new StringBuffer();
+		for(int i = 0; i < traversal.size(); i++)
+			output.append(traversal.get(i).toString() + " ");
+		return output.toString();
 	}
 }
