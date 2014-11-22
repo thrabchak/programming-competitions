@@ -38,12 +38,24 @@ public class HashTable<T> {
 		return true;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void rehash(){
-		//TODO
+		HashEntry[] newDataArray = new HashEntry[dataArray.length*2];
+		HashEntry[] oldDataArray = dataArray;
+		dataArray = newDataArray;
+		
+		for(int i = 0; i < oldDataArray.length; i++)
+			put(oldDataArray[i].key, (T)oldDataArray[i].data);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void rehash(int newSize){
-		//TODO
+		HashEntry[] newDataArray = new HashEntry[newSize];
+		HashEntry[] oldDataArray = dataArray;
+		dataArray = newDataArray;
+		
+		for(int i = 0; i < oldDataArray.length; i++)
+			put(oldDataArray[i].key, (T)oldDataArray[i].data);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -77,11 +89,17 @@ public class HashTable<T> {
 	}
 	
 	public String toString(){
-		//TODO
-		return "";
+		StringBuffer output = new StringBuffer();
+		
+		output.append("     Key      |     Data\n");
+		output.append("==============================\n");
+		
+		for( int i = 0; i < dataArray.length; i++)
+			output.append(String.format("%-14s|%-14s",
+							dataArray[i].key, 
+							dataArray[i].data.toString()));
+		
+		return output.toString();
 	}
-	
-
-	
 	
 }
