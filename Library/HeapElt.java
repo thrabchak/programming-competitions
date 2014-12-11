@@ -1,5 +1,3 @@
-package heap;
-
 /**
  * A generic class for heap elements that include handles
  */

@@ -1,4 +1,3 @@
-package heap;
 public class HeapInt extends HeapElt {
 
     // private Integer record;

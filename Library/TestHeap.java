@@ -1,5 +1,3 @@
-package heap;
-
 /**
  * A class to test a heap with handles
  */

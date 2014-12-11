@@ -1,4 +1,3 @@
-package heap;
 /**
  * An implementation of a minimum heap with handles
  */
