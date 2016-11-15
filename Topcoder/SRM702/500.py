@@ -56,4 +56,4 @@ assert gridSort.sort(3, 5, ( 10,6,8,9,7,5,1,3,4,2,15,11,13,14,12) ) == "Possible
 assert gridSort.sort(6, 2,(11,12, 2,1, 9,10, 7,8, 6,5, 3,4)) == "Impossible"
 assert gridSort.sort(3, 5, ( 10,6,8,9,7,5,1,3,4,2,15,11,13,12,14) ) == "Impossible"
 assert gridSort.sort(2, 3, ( 1, 2, 3, 4, 5, 6)) == "Possible"
-assert gridSort.sort(2, 3, ( 2, 3, 5, 4, 5, 6)) == "Impossible"
+assert gridSort.sort(2, 3, ( 3, 1, 6, 4, 2, 5)) == "Impossible"
