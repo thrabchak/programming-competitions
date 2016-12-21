@@ -13,6 +13,8 @@ option(BUILD_GMOCK "Builds the googlemock subproject" OFF)
 add_executable(drawingBook drawing-book.cpp)
 target_link_libraries(drawingBook gtest)
 
-
 add_executable(tailorShop tailor-shop.cpp)
 target_link_libraries(tailorShop gtest)
+
+add_executable(hackonacciMatrixRotations hackonacci-matrix-rotations.cpp)
+target_link_libraries(hackonacciMatrixRotations gtest)
