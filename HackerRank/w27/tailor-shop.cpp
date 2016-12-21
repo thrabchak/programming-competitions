@@ -28,7 +28,7 @@ using namespace std;
 
 // Tailor Shop
 int minButtons(int n, int p, vector<int> &v) {
-  set<int> buttonsGroupSizes;
+  vector<int> buttonVector(150015000,-1);
   long int totalButtons = 0;
 
   for(int i = 0; i < n; i++) {
@@ -36,12 +36,12 @@ int minButtons(int n, int p, vector<int> &v) {
     if(v[i] % p != 0)
       numButtonsInGroup++;
 
-    while(buttonsGroupSizes.find(numButtonsInGroup) != buttonsGroupSizes.end()) {
-      // handle set size already exists
-      numButtonsInGroup++;
+    if(buttonVector[numButtonsInGroup] != -1) {
+      //size is in map - follow trail
+      while(buttonVector[++numButtonsInGroup] != -1);
     }
-    
-    buttonsGroupSizes.insert(numButtonsInGroup);
+
+    buttonVector[numButtonsInGroup] = numButtonsInGroup+1;
     totalButtons += numButtonsInGroup;
   }
 
