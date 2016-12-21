@@ -19,7 +19,6 @@
 #include <sstream>
 #include <iostream>
 #include <algorithm>
-#include <unordered_map>
 
 #include <gtest/gtest.h>
   using ::testing::Test;

@@ -20,15 +20,21 @@
 #include <iostream>
 #include <algorithm>
 #include <unordered_map>
+#include <unordered_set>
 
 #include <gtest/gtest.h>
   using ::testing::Test;
 
 using namespace std;
 
+struct Bucket {
+  int start;
+  int end;
+};
+
 // Tailor Shop
 int minButtons(int n, int p, vector<int> &v) {
-  vector<int> buttonVector(20000,-1);
+  list<Bucket> bucketList;
   long int totalButtons = 0;
 
   for(int i = 0; i < n; i++) {
@@ -36,11 +42,48 @@ int minButtons(int n, int p, vector<int> &v) {
     if(v[i] % p != 0)
       numButtonsInGroup++;
 
-    if(buttonVector[numButtonsInGroup] != -1) {
-      while(buttonVector[++numButtonsInGroup] != -1);
+    bool existingBucket = false;
+      
+    std::list<Bucket>::iterator it;
+    for (it = bucketList.begin(); it != bucketList.end(); ++it) {
+      if(numButtonsInGroup == (*it).start - 1) {
+        existingBucket = true;
+        break;
+      } else if(numButtonsInGroup >= (*it).start && numButtonsInGroup <= (*it).end + 1) {
+        existingBucket = true;
+        break;
+      } else if(numButtonsInGroup < (*it).start) {
+        break;
+      }
     }
 
-    buttonVector[numButtonsInGroup] = numButtonsInGroup+1;
+    if(!existingBucket) {
+      Bucket b;
+      b.start = numButtonsInGroup;
+      b.end = numButtonsInGroup;
+      bucketList.insert(it, b);      
+    } else {
+      if((*it).start - 1 == numButtonsInGroup) {
+        (*it).start--;
+
+        if(it != bucketList.begin()) {
+          std::list<Bucket>::iterator p = prev(it);
+          if((*p).end >= (*it).start) {
+            (*p).end = (*it).end;
+            bucketList.erase(it);
+          }
+        }
+      } else {
+        (*it).end++;
+        numButtonsInGroup = (*it).end;
+
+        std::list<Bucket>::iterator n = next(it);
+        if(n != bucketList.end() && (*n).start - 1 <= (*it).end) {
+          (*n).start = (*it).start;
+          bucketList.erase(it);
+        }
+      }
+    }
     totalButtons += numButtonsInGroup;
   }
 
@@ -127,6 +170,18 @@ TEST(TailorShop, Test10) {
   int p = 1;
   vector<int> v(5000, 5000);
   EXPECT_EQ(minButtons(n, p, v), 37497500);
+}
+TEST(TailorShop, Test11) {
+  int n = 100000;
+  int p = 1;
+  vector<int> v(100000, 100000);
+  EXPECT_EQ(minButtons(n, p, v), 2115048112);
+}
+TEST(TailorShop, Test12) {
+  int n = 100000;
+  int p = 2;
+  vector<int> v(100000, 100000);
+  EXPECT_EQ(minButtons(n, p, v), 1410015408);
 }
 
 int main(int argc, char** argv) {
