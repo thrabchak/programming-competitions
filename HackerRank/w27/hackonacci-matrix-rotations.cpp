@@ -148,6 +148,13 @@ TEST(Hackonacci, Test2) {
   EXPECT_EQ(assessAngle(ans, 270), 1960244);
   EXPECT_EQ(assessAngle(ans, 360), 0);
 }
+TEST(Hackonacci, Test3) {
+  int n = 2000;
+  Answers ans = fillAnswers(n);
+
+  for(int i = 0; i < 10000; i++)
+    EXPECT_EQ(assessAngle(ans, 90 * (100000)), 0);
+}
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
