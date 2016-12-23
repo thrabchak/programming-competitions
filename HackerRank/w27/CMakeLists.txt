@@ -18,3 +18,6 @@ target_link_libraries(tailorShop gtest)
 
 add_executable(hackonacciMatrixRotations hackonacci-matrix-rotations.cpp)
 target_link_libraries(hackonacciMatrixRotations gtest)
+
+add_executable(zeroMoveNim zero-move-nim.cpp)
+target_link_libraries(zeroMoveNim gtest)

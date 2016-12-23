@@ -32,59 +32,70 @@ struct Bucket {
   int end;
 };
 
-// Tailor Shop
-int minButtons(int n, int p, vector<int> &v) {
-  list<Bucket> bucketList;
-  long int totalButtons = 0;
+class BucketContainer {
+public:
+  BucketContainer() {};
+  ~BucketContainer() {};
 
-  for(int i = 0; i < n; i++) {
-    int numButtonsInGroup = v[i] / p;
-    if(v[i] % p != 0)
-      numButtonsInGroup++;
-
-    bool existingBucket = false;
-      
+  int insert(int x) {
     std::list<Bucket>::iterator it;
+    bool existingBucket = false;
+
     for (it = bucketList.begin(); it != bucketList.end(); ++it) {
-      if(numButtonsInGroup == (*it).start - 1) {
+      if(x < (*it).start - 1) {
+        break;
+      } else if(x == (*it).start - 1) {
         existingBucket = true;
         break;
-      } else if(numButtonsInGroup >= (*it).start && numButtonsInGroup <= (*it).end + 1) {
+      } else if(x <= (*it).end + 1) {
         existingBucket = true;
-        break;
-      } else if(numButtonsInGroup < (*it).start) {
         break;
       }
     }
 
     if(!existingBucket) {
       Bucket b;
-      b.start = numButtonsInGroup;
-      b.end = numButtonsInGroup;
-      bucketList.insert(it, b);      
+      b.start = x;
+      b.end = x;
+      bucketList.insert(it, b);
+      return x;
     } else {
-      if((*it).start - 1 == numButtonsInGroup) {
+      if((*it).start - 1 == x) {
         (*it).start--;
-
-        if(it != bucketList.begin()) {
-          std::list<Bucket>::iterator p = prev(it);
-          if((*p).end >= (*it).start) {
-            (*p).end = (*it).end;
-            bucketList.erase(it);
-          }
-        }
+        return x;
       } else {
         (*it).end++;
-        numButtonsInGroup = (*it).end;
+        int retval = (*it).end;
 
         std::list<Bucket>::iterator n = next(it);
         if(n != bucketList.end() && (*n).start - 1 <= (*it).end) {
           (*n).start = (*it).start;
           bucketList.erase(it);
         }
+        return retval;
       }
     }
-    totalButtons += numButtonsInGroup;
+    return -1;// Should have returned by now
+  };
+
+  int size() {
+    return bucketList.size();
+  };
+
+  list<Bucket> bucketList;
+};
+
+// Tailor Shop
+int minButtons(int n, int p, vector<int> &v) {
+  BucketContainer container;
+  long int totalButtons = 0;
+
+  for(int i = 0; i < n; i++) {
+    int numButtonsInGroup = v[i] / p;
+    if(v[i] % p != 0)
+      numButtonsInGroup++;
+    
+    totalButtons += container.insert(numButtonsInGroup);
   }
 
   return totalButtons;
@@ -152,7 +163,7 @@ TEST(TailorShop, Test7) {
   EXPECT_EQ(minButtons(n, p, v), 5);
 }
 
-//Long tests
+// Long tests
 TEST(TailorShop, Test8) {
   int n = 10000;
   int p = 1;
@@ -182,6 +193,28 @@ TEST(TailorShop, Test12) {
   int p = 2;
   vector<int> v(100000, 100000);
   EXPECT_EQ(minButtons(n, p, v), 1410015408);
+}
+
+// Bucket container tests
+TEST(BucketContainer, Test1) {
+  BucketContainer c;
+
+  // Insert distinct numbers
+  EXPECT_EQ(c.insert(3), 3);
+  EXPECT_EQ(c.insert(1), 1);
+  EXPECT_EQ(c.insert(5), 5);
+  EXPECT_EQ(c.size(), 3);
+
+
+  EXPECT_EQ(c.insert(2), 2);
+  EXPECT_EQ(c.size(), 2);
+
+  EXPECT_EQ(c.insert(4), 4);
+  EXPECT_EQ(c.size(), 1);
+
+  // Insert duplicates
+  EXPECT_EQ(c.insert(1), 6);
+  EXPECT_EQ(c.size(), 1);
 }
 
 int main(int argc, char** argv) {

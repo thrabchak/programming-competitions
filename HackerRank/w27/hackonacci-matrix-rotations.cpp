@@ -155,6 +155,11 @@ TEST(Hackonacci, Test3) {
   for(int i = 0; i < 10000; i++)
     EXPECT_EQ(assessAngle(ans, 90 * (100000)), 0);
 }
+TEST(Hackonacci, Test4) {
+  unsigned long long x = 2000*2000*2000*2000;
+  char c = hackIsOdd(x) ? 'O' : 'E';
+  cout << c << endl;
+}
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
